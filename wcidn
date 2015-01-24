@@ -11,6 +11,9 @@ default()
 {
     if [ -f ./dates ]; then
 	    cat dates | column -t -s '@'
+    else
+	echo "#@EVENT NAME@START DATE@END DATE" > dates
+	default
     fi
 }
 
@@ -22,7 +25,7 @@ add()
     read start
     echo "Type end date, followed by [ENTER]:"
     read end
-    LEN=$( cat dates | wc -l ) 
+    LEN=$( cat dates | wc -l )
     echo "$LEN@$name@$start@$end" >> dates 
 }
 
