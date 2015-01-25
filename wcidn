@@ -23,9 +23,9 @@ add()
 {
     echo "Type name of event, followed by [ENTER]:"
     read name
-    echo "Type start date, followed by [ENTER]:"
+    echo "Type start date [MM/DD/YYYY], followed by [ENTER]:"
     read start
-    echo "Type end date, followed by [ENTER]:"
+    echo "Type end date [MM/DD/YYYY], followed by [ENTER]:"
     read end
     LEN=$( cat dates | wc -l )
     echo "$LEN@$name@$start@$end" >> dates 
