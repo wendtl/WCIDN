@@ -12,7 +12,7 @@ default()
     if [ -f ./dates ] && [ -s ./dates ]; then
 	    cat dates | column -t -s '@'
     else
-	echo "#@EVENT NAME@START DATE@END DATE" > dates
+	(echo "#@EVENT NAME@START DATE@END DATE"; echo "") > dates
 	default
     fi
 }
@@ -37,14 +37,25 @@ remove()
     # Decrement num
     NUM=$(( $NUM + 1 ))
     # Remove line corresponding with num
-    sed "${NUM}d" dates | column -t -s '@' > dates
-    # Move through 'dates' file to change first character of every line to new number
+    # NOTE: Apparently the sed '-i' flag causes problems on some unix variants?
+    sed -i "${NUM}d" dates
+    # Print file without chosen even
+    cat dates | column -t -s '@'
+    # TODO: Move through new 'dates' file to change first character of every line to new number
+    # $COUNT is variable to hold new line numbers
+    COUNT=0
+    DOC=""
     while read line
-    do
-	if [ wc -l $line -ne 1 ]; then
-	    echo "test"
+    do	
+	#LINUM= wc -l < DOC 
+	#if [ $((LINUM)) -ne 0 ] && [ $((LINUM)) ; then
+	if [ $((COUNT)) -ne 0 ]; then    
+	   DOC="$DOC"$'\n'"$COUNT@${line:1}"
 	fi
+	COUNT=$(( $COUNT + 1 ))
     done < dates
+    echo "#@EVENT NAME@START DATE@END DATE" > dates
+    echo "$DOC" >> dates
 }
 #Process first argument and run coordinating function
 if [ "$1" == "add" ]; then
