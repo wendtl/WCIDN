@@ -4,13 +4,15 @@
 # Parse input via case statement in lieu of if statement
 # Implement 'remove' function
 # Get current date
+# Funtion to remove all past-due events
 
 #BEGIN ENUMERATING FUNCTIONS
 #Main function: Displays contents of "dates" file
 default()
 {
-    if [ -f ./dates ] && [ -s ./dates ]; then
-	    cat dates | column -t -s '@'
+    if [ -f ./dates ] && [ -s ./dates ]; then	
+	now="$(date +'%d/%m/%Y')"
+	cat dates | column -t -s '@'
     else
 	(echo "#@EVENT NAME@START DATE@END DATE"; echo "") > dates
 	default
